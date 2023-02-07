@@ -26,12 +26,17 @@ class RSA():
         Returns:
             List[Tuple[int]]: A list containing two tuples, each representing a pair of public or private keys.
         """
+        
         prime_p = self.gen_prime.gen_prime()  
         prime_q = self.gen_prime.gen_prime()  
+
         modulus = prime_p * prime_q
+        
         totient = (prime_p - 1) * (prime_q - 1)
+        
         encryption_exponent = 65537
         decryption_exponent = self.utils.extended_gcd(encryption_exponent, totient)
+        
         public_key = [modulus, encryption_exponent]
         private_key = [modulus, decryption_exponent]
 
