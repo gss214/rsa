@@ -69,7 +69,6 @@ class RSA():
 
     def OAEPencrypt(self, message, public_key, label=""):
         
-        message = message.encode()
         label = label.encode()
 
         if len(message) > self.k - 2 * self.h_len - 2:
