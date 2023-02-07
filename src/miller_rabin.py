@@ -45,15 +45,11 @@ class MillerRabin:
         Returns
             bool: True if number is probably prime, False otherwise
         """
-        if number <= 1:
-            return False
-        if number <= 3:
-            return True
-        if number % 2 == 0 or number % 3 == 0:
-            return False
+        if number <= 1: return False
+        if number <= 3: return True
+        if number % 2 == 0 or number % 3 == 0: return False
 
         for _ in range(k):
             witness = self.rng.randrange(2, number - 1)
-            if not self.single_test(number, witness):
-                return False
+            if not self.single_test(number, witness): return False
         return True

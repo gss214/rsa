@@ -4,11 +4,10 @@ from src.generate_prime import GeneratePrime
 def main():
     rsa = RSA()
     public_key, private_key = rsa.generate_keys()
-    opa = rsa.OAEPencrypt("aaaaaaaaaaaaaaaaaaa!", "", public_key)
-    print(opa)
-    print()
-    pao = rsa.OAEPdecrypt(opa, '', private_key)
-    print(pao)
+    encrypted_message = rsa.OAEPencrypt("Hello World!")
+    print("Encrypted message: ", encrypted_message, "\n")
+    decrypted_message = rsa.OAEPdecrypt(encrypted_message)
+    print("Decrypted message: ", decrypted_message)
     """
     print(f"Public key: {public_key}")
     print()
