@@ -18,3 +18,17 @@ class Utils():
         else:
             gcd, x, y = self.extended_gcd(b, a % b)
             return gcd, y, x - (a // b) * y
+
+    def xor(self, a, b):
+        """
+        Computs a xor operation between two strings
+
+        Args:
+            a: A string
+            b: A string
+
+        Returns:
+            A string resulted of a xor operation
+
+        """
+        return [a[i] ^ b[i] for i in range(len(a))]
