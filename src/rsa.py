@@ -147,36 +147,3 @@ class RSA():
             c = struct.pack(">I", counter)
             T += hash_func(seed + c).digest()
         return T[:mask_len]
-
-"""
-"k = 128" define o tamanho do bloco em bits para a codificação.
-
-"hash_func = hashlib.sha256" define o algoritmo de hash a ser usado, que é SHA-256.
-
-"h_len = hash_func().digest_size" define o tamanho do digesto de hash (saída) a ser gerado pelo algoritmo de hash.
-
-"message = message.encode()" codifica a mensagem de entrada em bytes.
-
-"label = label.encode()" codifica a etiqueta de entrada em bytes.
-
-"if len(message) > k - 2 * h_len - 2:" verifica se a mensagem é muito longa para ser codificada usando OAEP. Se for, uma exceção "ValueError" é lançada.
-
-"l_hash = hash_func(label).digest()" gera o digesto de hash da etiqueta usando o algoritmo de hash definido.
-
-"ps = os.urandom(k - len(message) - 2 * h_len - 2)" gera uma string de bytes aleatórios de tamanho apropriado para ser usado como "padding".
-
-"db = l_hash + ps + b'\x01' + message" concatena os diferentes elementos para gerar "db".
-
-"seed = os.urandom(h_len)" gera uma string de bytes aleatórios de tamanho h_len para ser usado como semente.
-
-"db_mask = self.mgf1(seed, k - h_len - 1, hash_func)" gera uma máscara para "db" usando a função "mgf1".
-
-"masked_db = bytes(self.xor(db, db_mask))" realiza a operação "xor" entre "db" e a máscara, e codifica o resultado em bytes.
-
-"seed_mask = self.mgf1(masked_db, h_len, hash_func)" gera uma máscara para "seed" usando a função "mgf1".
-
-"masked_seed = bytes(self.xor(seed, seed_mask))" realiza a operação "xor" entre "seed" e a máscara, e codifica o resultado em bytes.
-
-"return b'\x00' + masked_seed + masked_db" retorna o resultado final, que é o primeiro byte '\x00' concatenado com "masked_seed" e "masked_db".
-
-"""
