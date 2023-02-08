@@ -150,7 +150,7 @@ class RSA():
         message_start = self.h_len + db[self.h_len:].find(b'\x01') + 1
         message = db[message_start:]
         
-        return message.decode()
+        return message
 
     def mgf1(self, seed, mask_len, hash_func):
         """
