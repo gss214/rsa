@@ -10,10 +10,7 @@ class MillerRabin:
     def single_test(self, number: int, witness: int) -> bool:
         """
         Perform a single test of the Miller-Rabin primality test
-        :param number: int, the number to be tested for primality
-        :param witness: int, a random integer in the range [2, number-1]
-
-
+        
         Args:
             number (int): The number to be tested for primality.
             witness (int): A random integer in the range [2, number-1].

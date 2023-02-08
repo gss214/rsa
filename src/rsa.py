@@ -48,6 +48,16 @@ class RSA():
         return (public_key, private_key)
 
     def RSAEncrypt(self, encoded_message, public_key):
+        """
+        Encrypts a message using RSA encryption.
+
+        Args:
+            encoded_message (list): The message to be encrypted, represented as a list of ints.
+            public_key (tuple): The RSA public key, represented as a tuple of two ints (n, e).
+
+        Returns:
+            list: The encrypted message, represented as a list of ints.
+        """
         cryptogram = []
         for i in encoded_message:
             # c = m^e \mod n
@@ -55,6 +65,16 @@ class RSA():
         return cryptogram
 
     def RSADecrypt(self, encoded_message, private_key):
+        """
+        Decrypts an RSA-encrypted message.
+
+        Args:
+        encoded_message (list): The encrypted message, represented as a list of ints.
+            private_key (tuple): The RSA private key, represented as a tuple of two ints (n, d).
+
+        Returns:
+            list: The decrypted message, represented as a list of ints.
+        """
         message = []
         for i in encoded_message:
             # m = c^d \mod n
@@ -62,13 +82,37 @@ class RSA():
         return message
 
     def form_data_block(self, l_hash, message):
+        """
+        Forms a data block for a message.
+
+        Args:
+            l_hash (bytes): The hash of the message, represented as bytes.
+            message (bytes): The message to be sent, represented as bytes.
+
+        Returns:
+            bytes: The formed data block, ready to be encrypted.
+        """
         ps = bytearray()
         for _ in range(self.k - len(message) - ( 2 * self.h_len ) - 2):
             ps.append(0) 
         return l_hash + ps + b'\x01' + message
 
     def OAEPencrypt(self, message, public_key, label=""):
-        
+        """
+        Encrypt a message using the OAEP method.
+
+        Args:
+            message (bytes): The message to be encrypted.
+            public_key (int): The public key to encrypt the message with.
+            label (str, optional): A label to be associated with the message. Defaults to "".
+
+        Returns:
+            bytes: The encrypted message.
+
+        Raises:
+            ValueError: If the message is too long to be encoded using OAEP.
+        """
+
         label = label.encode()
 
         if len(message) > self.k - 2 * self.h_len - 2:
@@ -104,13 +148,18 @@ class RSA():
 
     def OAEPdecrypt(self, encoded_message, private_key, label=""):
         """
-        Decode the encoded message using the OAEP method.
+        Decrypt an encoded message using the OAEP method.
 
         Args:
-            encoded_message (bytes): The encoded message to be decoded.
+            encoded_message (bytes): The encoded message to be decrypted.
+            private_key (int): The private key to decrypt the message with.
+            label (str, optional): The label associated with the message. Defaults to "".
 
         Returns:
-            bytes: The decoded message.
+            bytes: The decrypted message.
+
+        Raises:
+            ValueError: If the length of the encoded message is incorrect or if the decoded message has an incorrect label hash.
         """
         
         label = label.encode()
